@@ -16,8 +16,12 @@ const io = new Server(server, { cors: { origin: process.env.NODE_ENV === 'produc
 const PORT = Number(process.env.PORT || 3000);
 const ROOT = __dirname;
 const uploadDir = path.join(ROOT, 'uploads');
+const dataDir = path.join(ROOT, 'data');
+
 fs.mkdirSync(uploadDir, { recursive: true });
-const db = new Database(path.join(ROOT, 'data', 'puttappu.sqlite'));
+fs.mkdirSync(dataDir, { recursive: true });
+
+const db = new Database(path.join(dataDir, 'puttappu.sqlite'));
 db.pragma('journal_mode = WAL');
 db.exec(`
 CREATE TABLE IF NOT EXISTS users (
