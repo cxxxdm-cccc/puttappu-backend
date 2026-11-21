@@ -39,7 +39,7 @@ app.use(helmet({ contentSecurityPolicy: false }));
 app.use(morgan('tiny'));
 app.use(express.json({ limit: '1mb' }));
 app.use('/uploads', express.static(uploadDir));
-app.use(express.static(path.join(ROOT, 'public')));
+app.use(express.static(ROOT));
 
 const upload = multer({
  storage: multer.diskStorage({ destination: uploadDir, filename: (req, file, cb) => cb(null, `${uuidv4()}${path.extname(file.originalname).toLowerCase()}`) }),
@@ -136,5 +136,5 @@ io.on('connection', socket => {
   socket.on('disconnect', () => { leaveRoom(socket); socketUser.delete(socket.id); });
 });
 
-app.get('*', (req, res) => res.sendFile(path.join(ROOT, 'public', 'index.html')));
+app.get('*', (req, res) => res.sendFile(path.join(ROOT, 'index.html')));
 server.listen(PORT, '0.0.0.0', () => console.log(`PuTtAppu listening on ${PORT}`));
